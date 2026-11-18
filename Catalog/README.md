@@ -1,47 +1,77 @@
-# Catalog 
+# Catalog Website
 
-A public catalog of beings, realms, species, and groups. Visitors can
-search by name and filter by category or tag. Invited developers can
-create and edit entries, upload images, and publish changes.
-
-## Project status
-
-Early design and development.
+The website starts with a public catalog of beings, realms, species, and
+groups. The structure is intended to leave room for future sections, including
+games, without mixing their data into the catalog.
 
 ## Local development
 
-Prerequisites:
-
-- Node.js 20 or later
-- Docker
-- Supabase CLI
-- VS Code
-
-Open the `Catalog` folder in VS Code, then start the local database:
+Open the `Catalog` folder in VS Code. Start Docker Desktop, then run these
+commands in the integrated terminal:
 
 ```powershell
-cd Catalog
 npx supabase start
 npx supabase db reset
 ```
 
-Local services:
+Services:
 
-- Web app: http://localhost:3000
+- Frontend: http://localhost:3000
 - Supabase Studio: http://127.0.0.1:55433
+- Local email inbox (Mailpit): http://127.0.0.1:55434
 - Supabase API: http://127.0.0.1:55431
-- PostgreSQL: postgresql://postgres:postgres@127.0.0.1:55430/postgres
 
-Start the frontend application:
+In another integrated terminal, set up and run the frontend:
 
 ```powershell
-cd Catalog/frontend
+Set-Location frontend
 npm install
+Copy-Item .env.example .env.local
+```
+
+Set `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in `frontend/.env.local` to the
+local publishable key shown by `npx supabase status`, then run:
+
+```powershell
 npm run dev
 ```
 
-Copy `frontend/.env.example` to `frontend/.env.local` only when the app needs Supabase
-credentials. Obtain the local publishable key with `npx supabase status`.
-Never add secret or service-role keys to a Next.js browser environment.
+The VS Code task **Catalog: Run Locally** starts Supabase and the frontend.
+For a clean local database, run **Catalog: Reset Supabase**.
 
-In VS Code, run **Tasks: Run Task** and choose **Catalog: Run Locally**.
+## Developer accounts
+
+Public sign-ups are disabled. Only an administrator with the local Supabase
+service-role key can invite developers and grant the developer role. The key
+is available from `npx supabase status`; never put it in frontend environment
+variables, source control, or browser code.
+
+In a Catalog terminal, set the service-role key for this PowerShell session,
+then run the invite script from `frontend`:
+
+```powershell
+$env:SUPABASE_URL = "http://127.0.0.1:55431"
+$env:SUPABASE_SERVICE_ROLE_KEY = "<SERVICE_ROLE_KEY from npx supabase status>"
+$env:CATALOG_SITE_URL = "http://127.0.0.1:3000"
+Set-Location frontend
+npm run invite:developer -- first@example.com second@example.com
+```
+
+Local invitation messages are captured by Mailpit; they are not sent to
+external email addresses. Open the inbox, follow each invitation, and choose a
+password. Developers sign in at http://localhost:3000/login. Their role is
+stored in administrator-managed Supabase `app_metadata`; self-service sign-up
+and role changes are not available.
+
+## Phase 2 verification
+
+From the `Catalog` folder:
+
+```powershell
+npx supabase db reset
+npx supabase test db
+```
+
+The database tests verify published/draft visibility, developer-only writes,
+tags and relationships, and the multiple-realm rule. Run `npm run lint` and
+`npm run build` from `frontend` to check the app.

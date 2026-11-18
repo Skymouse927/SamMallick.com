@@ -2,10 +2,32 @@
 
 ## Purpose
 
-Build a public, searchable catalog of beings, realms, species, groups,
-and other entry types as the catalog grows. Anyone can browse published
-entries without signing in. Two invited developers can add and edit
-entries, and more developers can be invited later.
+Build a website that starts with a public, searchable catalog of beings,
+realms, species, groups, and other catalog entry types. Anyone can browse
+published catalog entries without signing in. Invited developers can add
+and edit catalog entries, and more developers can be invited later.
+
+The catalog is the first section of the website, not the limit of its scope.
+Once the catalog is established, the site may grow to include games and other
+features.
+
+## Website structure and future growth
+
+- Keep the root route available for site-wide home, navigation, and future
+  sections. Build the catalog under `/catalog`; a future games section can use
+  `/games`.
+- Keep catalog and future feature data, rules, pages, storage, and access
+  policies in their own feature areas. Catalog `entries` describe catalog
+  subjects; do not represent games as another catalog entry type.
+- Share the site shell, visual foundations, account identity, and utilities
+  where they are genuinely common. Keep feature permissions separate, so
+  catalog developer access does not automatically grant access to future
+  features.
+- Prefer clear module boundaries and additive migrations. Do not introduce
+  separate services, databases, or a plugin framework until a real feature
+  needs them.
+- Design future features when their requirements are known rather than
+  pre-committing their data models now.
 
 ## How the catalog works
 
@@ -91,8 +113,9 @@ realm and group, upload an image with alt text, and publish the entry.
 
 ### Phase 4 — Public catalog and search
 
-Build the public listing and detail pages. Add partial-name search,
-combinable filters, alphabetical sorting, and links between entries.
+Build the public catalog listing and detail pages under `/catalog`. Add
+partial-name search, combinable filters, alphabetical sorting, and links
+between entries. Keep the site root available for overall website navigation.
 
 **Complete when** a visitor can find a published being by part of its
 name, narrow the results by realm or group, view its image, and follow
@@ -116,7 +139,7 @@ required checks pass. This workflow ends at code review approval.
 ## Open design decisions
 
 - Decide whether publishing requires an image or allows a placeholder.
-- Confirm whether a being can link to multiple realms or species.
-  The working assumption is one species and multiple groups.
+- Confirm whether a being can link to multiple species. The current model
+  allows multiple realms and groups, and one species.
 - Confirm whether the first version needs file attachments beyond
   the entry image.
