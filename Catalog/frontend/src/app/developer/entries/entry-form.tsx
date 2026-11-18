@@ -102,7 +102,7 @@ export default function EntryForm({
       <form action={formAction} className="mt-8 space-y-8">
         {entry && <input name="id" type="hidden" value={entry.id} />}
 
-        <section className="space-y-5 rounded-xl border border-zinc-200 bg-white p-6">
+        <section className="space-y-5 rounded-xl border border-zinc-200 bg-white p-6 text-zinc-900">
           <div>
             <label
               className="block text-sm font-medium text-zinc-800"
@@ -170,7 +170,7 @@ export default function EntryForm({
         </section>
 
         {entryType === "being" && (
-          <section className="space-y-6 rounded-xl border border-zinc-200 bg-white p-6">
+          <section className="space-y-6 rounded-xl border border-zinc-200 bg-white p-6 text-zinc-900">
             <div>
               <h2 className="text-lg font-semibold text-zinc-950">
                 Relationships
@@ -234,7 +234,7 @@ export default function EntryForm({
                 <div className="mt-2 grid gap-2 sm:grid-cols-2">
                   {realms.map((target) => (
                     <label
-                      className="flex items-center gap-2 text-sm"
+                      className="flex items-center gap-2 text-sm text-zinc-700"
                       key={target.id}
                     >
                       <input
@@ -276,7 +276,7 @@ export default function EntryForm({
                 <div className="mt-2 grid gap-2 sm:grid-cols-2">
                   {groups.map((target) => (
                     <label
-                      className="flex items-center gap-2 text-sm"
+                      className="flex items-center gap-2 text-sm text-zinc-700"
                       key={target.id}
                     >
                       <input
@@ -308,7 +308,7 @@ export default function EntryForm({
           </section>
         )}
 
-        <section className="space-y-5 rounded-xl border border-zinc-200 bg-white p-6">
+        <section className="space-y-5 rounded-xl border border-zinc-200 bg-white p-6 text-zinc-900">
           <div>
             <h2 className="text-lg font-semibold text-zinc-950">Image</h2>
             <p className="mt-1 text-sm text-zinc-600">
@@ -407,8 +407,8 @@ export default function EntryForm({
       )}
       {entry && (
         <section className="mt-12 border-t border-zinc-200 pt-8">
-          <h2 className="text-lg font-semibold text-red-800">Delete entry</h2>
-          <p className="mt-1 text-sm text-zinc-600">
+          <h2 className="text-lg font-semibold text-red-300">Delete entry</h2>
+          <p className="mt-1 text-sm text-[#b8a4d8]">
             This permanently deletes this entry and its relationship links.
             Other linked entries will not be deleted.
           </p>

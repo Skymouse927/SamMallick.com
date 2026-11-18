@@ -17,7 +17,13 @@ export default function EditEntryPage({
   params,
 }: PageProps<"/developer/entries/[id]/edit">) {
   return (
-    <Suspense fallback={<main className="p-8 text-zinc-600">Loading editor...</main>}>
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-[#24232b] px-6 text-[#b8a4d8]">
+          Loading editor...
+        </main>
+      }
+    >
       <EditEntryContent params={params} />
     </Suspense>
   );
@@ -99,11 +105,16 @@ async function EditEntryContent({
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-3xl px-6 py-10">
-      <Link className="text-sm text-zinc-600 hover:text-zinc-950" href="/developer">
+      <Link
+        className="text-sm text-[#b8a4d8] hover:text-[#d2c1ff]"
+        href="/developer"
+      >
         &larr; Developer entries
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold text-zinc-950">Edit entry</h1>
-      <p className="mt-2 text-zinc-600">
+      <h1 className="mt-4 text-3xl font-semibold text-[#d2c1ff]">
+        Edit entry
+      </h1>
+      <p className="mt-2 text-[#b8a4d8]">
         Update its details, relationships, image, or publishing status.
       </p>
       <EntryForm

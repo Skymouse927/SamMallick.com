@@ -1,8 +1,11 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import SignOutButton from "./sign-out-button";
+import SiteLogoForm from "./site-logo-form";
 import { createClient } from "@/lib/supabase/server";
+import { getSiteLogo } from "../catalog/site-logo-data";
 
 export default function DeveloperPage({
   searchParams,
@@ -26,6 +29,7 @@ async function DeveloperContent({
   searchParams: Promise<{ deleted?: string }>;
 }) {
   const { deleted } = await searchParams;
+  await connection();
   const supabase = await createClient();
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
@@ -54,6 +58,7 @@ async function DeveloperContent({
   if (entriesError) {
     throw new Error(`Unable to load catalog entries: ${entriesError.message}`);
   }
+  const siteLogo = await getSiteLogo(supabase);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-4xl flex-col gap-8 px-6 py-12">
@@ -62,15 +67,22 @@ async function DeveloperContent({
           <Link className="text-sm text-zinc-500 hover:text-zinc-900" href="/">
             &larr; Catalog
           </Link>
-          <h1 className="mt-4 text-3xl font-semibold text-zinc-950">
+          <h1 className="mt-4 text-3xl font-semibold text-[#d2c1ff]">
             Catalog entries
           </h1>
-          <p className="mt-2 text-zinc-600">
+          <p className="mt-2 text-[#b8a4d8]">
             Signed in as {userData.user.email}
           </p>
         </div>
         <SignOutButton />
       </header>
+      <section>
+        <h2 className="text-xl font-medium text-[#c2aaf5]">Site logo</h2>
+        <p className="mt-1 text-sm text-[#b8a4d8]">
+          Change the circular image shown at the top left of the site.
+        </p>
+        <SiteLogoForm currentLogoUrl={siteLogo?.url ?? null} />
+      </section>
       <section>
         {deleted === "success" && (
           <p
@@ -89,7 +101,9 @@ async function DeveloperContent({
           </p>
         )}
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <h2 className="text-xl font-medium text-zinc-900">Manage entries</h2>
+          <h2 className="text-xl font-medium text-[#c2aaf5]">
+            Manage entries
+          </h2>
           <Link
             className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
             href="/developer/entries/new"

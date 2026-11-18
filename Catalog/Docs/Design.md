@@ -126,8 +126,27 @@ a link to a related entry.
 ### Phase 5 — Frontend usability overhaul
 
 Overhaul the frontend so the catalog and developer workflows are usable.
-The specific design and usability requirements will be defined before
-implementation begins.
+Initial direction from the sketches:
+
+- The home page shows the site name and two large choices: Catalog, which
+  opens the catalog, and Future Additions, which remains inactive for now.
+- The catalog has navigation for Realms, Species, Groups, Beings, and All,
+  plus developer sign-in.
+- Selecting a category shows its relevant entries. A sidebar can list
+  entries in the selected category, and search can find entries across
+  all categories.
+- Selecting an entry shows its name, image, description, and connections.
+  On desktop, place the image left of the information; keep the stacked layout
+  on mobile. On desktop, the item and list should stretch to just above the
+  viewport bottom; the list should scroll within its box. Selecting a connection
+  type opens a list of connected entries.
+- Previous and next arrows move through the sorted entries currently shown;
+  the first entry has no previous arrow and the last has no next arrow. Keep
+  the controls subtle and in dedicated space beside the entry card on desktop;
+  on narrow screens, place them in a separate row above the list.
+
+These are the initial direction for Phase 5 and can be refined as feedback
+and additional requirements are provided.
 
 **Complete when** the agreed frontend usability requirements are implemented.
 

@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
+import SiteHeader from "../site-header";
 import {
   ENTRY_TYPE_LABELS,
   getPublicImageUrl,
@@ -27,13 +29,13 @@ function RelatedEntryLinks({
   }
 
   return (
-    <section className="mt-8">
-      <h2 className="text-lg font-semibold text-zinc-950">{heading}</h2>
+    <section className="mt-8 border-t border-[#474350] pt-5">
+      <h2 className="text-xl font-semibold text-[#f2eff6]">{heading}</h2>
       <ul className="mt-3 flex flex-wrap gap-2">
         {entries.map((entry) => (
           <li key={entry.id}>
             <Link
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-indigo-800 hover:border-indigo-300 hover:bg-indigo-50"
+              className="inline-flex items-center gap-2 rounded-full border border-[#625c6c] bg-[#27252e] px-4 py-2 text-sm font-medium text-[#e2d9f1] transition hover:border-[#b59bea] hover:bg-[#393642]"
               href={`/catalog/${entry.id}`}
             >
               {entry.name}
@@ -50,7 +52,7 @@ export default function CatalogEntryPage({ params }: CatalogEntryPageProps) {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-zinc-50 px-6 py-16 text-center text-zinc-600">
+      <main className="min-h-screen bg-[#24232b] px-6 py-16 text-center text-[#c1bbc9]">
           Loading catalog entry...
         </main>
       }
@@ -61,6 +63,7 @@ export default function CatalogEntryPage({ params }: CatalogEntryPageProps) {
 }
 
 async function CatalogEntryContent({ params }: CatalogEntryPageProps) {
+  await connection();
   const { id } = await params;
   const { supabase, entries, relationships } = await loadPublishedCatalog();
   const entry = entries.find((item) => item.id === id);
@@ -85,55 +88,42 @@ async function CatalogEntryContent({ params }: CatalogEntryPageProps) {
     .map((relationship) => entryById.get(relationship.source_entry_id))
     .filter((related): related is CatalogEntry => related !== undefined);
   return (
-    <main className="min-h-screen bg-zinc-50">
-      <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <Link className="text-lg font-bold tracking-tight text-zinc-950" href="/">
-            Sam Mallick
-          </Link>
-          <Link
-            className="text-sm font-medium text-indigo-700 hover:text-indigo-950"
-            href="/catalog"
-          >
-            Browse catalog
-          </Link>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-5xl px-6 py-8 sm:py-12">
+    <main className="dark-theme min-h-screen bg-[#24232b] text-[#f2eff6]">
+      <SiteHeader />
+      <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
         <Link
-          className="text-sm font-medium text-zinc-600 hover:text-zinc-950"
+          className="text-sm font-semibold text-[#d0cbd5] hover:text-[#f2eff6]"
           href="/catalog"
         >
           &larr; Back to catalog
         </Link>
-        <article className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+        <article className="mt-6 overflow-hidden rounded-2xl border border-[#4b4654] bg-[#302e38] shadow-[0_8px_24px_rgba(0,0,0,0.2)]">
           {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               alt={entry.image_alt ?? ""}
-              className="max-h-[34rem] w-full bg-zinc-100 object-contain"
+              className="max-h-[34rem] w-full bg-[#292831] object-contain"
               src={imageUrl}
             />
           ) : (
             <div
               aria-hidden="true"
-              className="flex h-48 items-center justify-center bg-gradient-to-br from-amber-50 via-rose-50 to-indigo-100"
+              className="flex h-48 items-center justify-center bg-gradient-to-br from-[#393245] via-[#35323f] to-[#343741]"
             >
-              <span className="text-6xl font-semibold text-zinc-400">
+              <span className="text-6xl font-semibold text-[#b49ae8]">
                 {entry.name.charAt(0).toUpperCase()}
               </span>
             </div>
           )}
           <div className="p-6 sm:p-10">
-            <p className="text-sm font-semibold uppercase tracking-wide text-indigo-700">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#b59bea]">
               {ENTRY_TYPE_LABELS[entry.entry_type_id]}
             </p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-zinc-950 sm:text-4xl">
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#f2eff6] sm:text-4xl">
               {entry.name}
             </h1>
             {entry.description && (
-              <p className="mt-5 max-w-3xl whitespace-pre-line text-base leading-7 text-zinc-700">
+              <p className="mt-5 max-w-3xl whitespace-pre-line text-base leading-7 text-[#d2cddd]">
                 {entry.description}
               </p>
             )}
@@ -155,7 +145,7 @@ async function CatalogEntryContent({ params }: CatalogEntryPageProps) {
                   heading={`Beings linked to ${entry.name}`}
                 />
                 {relatedBeings.length === 0 && (
-                  <p className="mt-8 text-sm text-zinc-500">
+                  <p className="mt-8 text-sm text-[#aaa4b2]">
                     No published Beings are linked to this entry yet.
                   </p>
                 )}
