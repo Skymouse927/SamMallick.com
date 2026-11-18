@@ -106,3 +106,9 @@ removes its relationship links and stored image; other linked entries remain.
 
 The image bucket is private. Developers can view all entry images; visitors
 can view an image only when its associated entry is published.
+
+## Public catalog
+
+Visit `/catalog` to browse published entries. Search by part of an entry name,
+combine the search with type, Realm, Species, or Group filters, then open an
+entry for its full description, image, and links to related published entries.

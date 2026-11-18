@@ -123,20 +123,39 @@ between entries. Keep the site root available for overall website navigation.
 name, narrow the results by realm or group, view its image, and follow
 a link to a related entry.
 
-### Phase 5 — Verification and code review (CR)
+### Phase 5 — Frontend usability overhaul
+
+Overhaul the frontend so the catalog and developer workflows are usable.
+The specific design and usability requirements will be defined before
+implementation begins.
+
+**Complete when** the agreed frontend usability requirements are implemented.
+
+### Phase 6 — Verification and code review (CR)
 
 Run the build, linting, and available tests. Verify the full workflow
 with both a developer account and a signed-out visitor. Check draft
 visibility, editing permissions, image replacement, and search with
 multiple filters.
 
-Open a GitHub pull request for the first working version. Include a
-summary, local verification steps, and any known limitations. The
-other developer reviews the code and tries the workflow. Address
-review findings in the same pull request.
+Open a GitHub pull request for the working version. Include a summary,
+local verification steps, and any known limitations. The other
+developer reviews the code and tries the workflow. Address review
+findings in the same pull request.
 
 **Complete when** the reviewer approves the pull request and all
 required checks pass. This workflow ends at code review approval.
+
+### Phase 7 — Public launch and real developer email
+
+Deploy the website publicly, enable real developer logins, and connect
+email delivery using the `sammallick.com` domain. Select the hosting,
+authentication, and email providers and confirm any costs before
+implementation.
+
+**Complete when** the site is publicly available, developers can sign
+in with real accounts, and developer emails use the `sammallick.com`
+domain.
 
 ## Open design decisions
 

@@ -43,16 +43,6 @@ values
     'published'
   );
 
-insert into public.tags (id, name)
-values
-  ('50000000-0000-0000-0000-000000000001', 'nocturnal'),
-  ('50000000-0000-0000-0000-000000000002', 'shapeshifter');
-
-insert into public.entry_tags (entry_id, tag_id)
-values
-  ('40000000-0000-0000-0000-000000000001', '50000000-0000-0000-0000-000000000001'),
-  ('40000000-0000-0000-0000-000000000001', '50000000-0000-0000-0000-000000000002');
-
 insert into public.entry_relationships (
   source_entry_id,
   relationship_type,
