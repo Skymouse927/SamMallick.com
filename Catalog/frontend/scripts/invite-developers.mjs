@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const siteUrl = process.env.CATALOG_SITE_URL ?? "http://127.0.0.1:3000";
+const siteUrl = process.env.CATALOG_SITE_URL ?? "http://localhost:3000";
 const emails = process.argv.slice(2).map((email) => email.trim().toLowerCase());
 
 if (!supabaseUrl || !serviceRoleKey) {

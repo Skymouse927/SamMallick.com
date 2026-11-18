@@ -64,6 +64,14 @@ export default function LoginPage() {
               type="password"
             />
           </label>
+          <div className="text-right">
+            <Link
+              className="text-sm text-zinc-600 underline hover:text-zinc-950"
+              href="/forgot-password"
+            >
+              Set or reset password
+            </Link>
+          </div>
           {errorMessage && (
             <p className="text-sm text-red-700" role="alert">
               {errorMessage}

@@ -18,17 +18,23 @@ export default function ConfirmInvitePage() {
       const type = searchParams.get("type");
 
       if (tokenHash) {
-        if (type !== "invite") {
-          setMessage("This invitation link is invalid.");
+        if (type !== "invite" && type !== "recovery") {
+          setMessage("This account link is invalid.");
           return;
         }
 
-        const { error } = await supabase.auth.verifyOtp({
-          token_hash: tokenHash,
-          type: "invite",
-        });
+        const { error } =
+          type === "invite"
+            ? await supabase.auth.verifyOtp({
+                token_hash: tokenHash,
+                type: "invite",
+              })
+            : await supabase.auth.verifyOtp({
+                token_hash: tokenHash,
+                type: "recovery",
+              });
         if (error) {
-          setMessage("This invitation link is invalid or has expired.");
+          setMessage(`Account link verification failed: ${error.message}`);
           return;
         }
       }
@@ -38,7 +44,11 @@ export default function ConfirmInvitePage() {
         return;
       }
       if (error || !data.session) {
-        setMessage("This invitation link is invalid or has expired.");
+        setMessage(
+          error
+            ? `Unable to complete invitation verification: ${error.message}`
+            : "No signed-in session was created. Reopen the invitation link from this computer.",
+        );
         return;
       }
 
