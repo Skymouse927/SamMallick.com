@@ -1,0 +1,1 @@
+-- Add local development seed data in a later catalog phase.

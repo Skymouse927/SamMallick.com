@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Catalog: Start Supabase",
+      "type": "shell",
+      "command": "npx supabase start",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Catalog: Reset Supabase",
+      "type": "shell",
+      "command": "npx supabase db reset",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Catalog: Start Web App",
+      "type": "npm",
+      "path": "frontend",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Catalog: Run Locally",
+      "dependsOn": [
+        "Catalog: Start Supabase",
+        "Catalog: Start Web App"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    }
+  ]
+}
