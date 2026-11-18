@@ -4,9 +4,7 @@ import { redirect } from "next/navigation";
 import SignOutButton from "./sign-out-button";
 import { createClient } from "@/lib/supabase/server";
 
-export default function DeveloperPage({
-  searchParams,
-}: PageProps<"/developer">) {
+export default function DeveloperPage() {
   return (
     <Suspense
       fallback={
@@ -15,17 +13,12 @@ export default function DeveloperPage({
         </main>
       }
     >
-      <DeveloperContent searchParams={searchParams} />
+      <DeveloperContent />
     </Suspense>
   );
 }
 
-async function DeveloperContent({
-  searchParams,
-}: {
-  searchParams: Promise<{ deleted?: string }>;
-}) {
-  const { deleted } = await searchParams;
+async function DeveloperContent() {
   const supabase = await createClient();
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
@@ -56,14 +49,14 @@ async function DeveloperContent({
   }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-4xl flex-col gap-8 px-6 py-12">
+    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-6 py-12">
       <header className="flex items-start justify-between gap-4">
         <div>
           <Link className="text-sm text-zinc-500 hover:text-zinc-900" href="/">
             &larr; Catalog
           </Link>
           <h1 className="mt-4 text-3xl font-semibold text-zinc-950">
-            Catalog entries
+            Developer access
           </h1>
           <p className="mt-2 text-zinc-600">
             Signed in as {userData.user.email}
@@ -72,33 +65,13 @@ async function DeveloperContent({
         <SignOutButton />
       </header>
       <section>
-        {deleted === "success" && (
-          <p
-            className="mb-4 rounded-md bg-emerald-50 p-3 text-sm text-emerald-800"
-            role="status"
-          >
-            Entry deleted.
-          </p>
-        )}
-        {deleted === "image-cleanup-failed" && (
-          <p
-            className="mb-4 rounded-md bg-amber-50 p-3 text-sm text-amber-900"
-            role="alert"
-          >
-            Entry deleted, but its image could not be removed from storage.
-          </p>
-        )}
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <h2 className="text-xl font-medium text-zinc-900">Manage entries</h2>
-          <Link
-            className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
-            href="/developer/entries/new"
-          >
-            Create entry
-          </Link>
-        </div>
+        <h2 className="text-xl font-medium text-zinc-900">
+          Entries visible to developers
+        </h2>
         {entries.length === 0 ? (
-          <p className="mt-3 text-zinc-600">No catalog entries yet.</p>
+          <p className="mt-3 text-zinc-600">
+            No entries yet. The editor will be added in Phase 3.
+          </p>
         ) : (
           <ul className="mt-4 divide-y divide-zinc-200 rounded-lg border border-zinc-200 bg-white">
             {entries.map((entry) => (
@@ -106,18 +79,10 @@ async function DeveloperContent({
                 className="flex items-center justify-between gap-4 px-4 py-3"
                 key={entry.id}
               >
-                <div>
-                  <p className="font-medium text-zinc-900">{entry.name}</p>
-                  <p className="mt-1 text-sm text-zinc-600">
-                    {entry.entry_type_id} · {entry.status}
-                  </p>
-                </div>
-                <Link
-                  className="text-sm font-medium text-zinc-700 hover:text-zinc-950"
-                  href={`/developer/entries/${entry.id}/edit`}
-                >
-                  Edit
-                </Link>
+                <span className="font-medium text-zinc-900">{entry.name}</span>
+                <span className="text-sm text-zinc-600">
+                  {entry.entry_type_id} · {entry.status}
+                </span>
               </li>
             ))}
           </ul>

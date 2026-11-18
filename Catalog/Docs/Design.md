@@ -33,9 +33,9 @@ features.
 
 ### Entries and relationships
 
-Each entry has a name, a description, an entry type, optional descriptive
-tags, and space for one uploaded image with alt text. The initial entry
-types are Being, Realm, Species, and Group.
+Each entry has a name, a description, an entry type, and space for one optional
+uploaded image with alt text. The initial entry types are Being, Realm, Species,
+and Group.
 
 Realms, species, and groups have their own pages. A developer adding a
 being selects its realm, species, and groups from existing entries.
@@ -43,32 +43,34 @@ These links power the public filters and let visitors move between
 related pages. Renaming a group updates its displayed name wherever
 it is linked.
 
-Descriptive tags cover traits such as `nocturnal` or `shapeshifter`.
 A later phase can add relationships such as “allied with” or “founded by.”
 
 ### Public browsing
 
 - Search by full or partial entry name, regardless of capitalization.
-- Combine name search with filters for type, realm, species, group,
-  and descriptive tags.
+- Combine name search with filters for type, realm, species, and group.
 - Sort matching entries alphabetically by name by default.
 - Show the entry image as a thumbnail in results and at a larger size
   on its detail page.
-- Reflect changes to published names, tags, and links automatically.
+- Reflect changes to published names and links automatically.
   Developers do not have to maintain category lists by hand.
 
 ### Developer editing
 
 1. Sign in with an invited developer account.
 2. Create an entry and choose its type.
-3. Add its name, description, applicable links, and descriptive tags.
+3. Add its name, description, and applicable links.
 4. Upload an image and add alt text. The image can be replaced later.
 5. Save the entry as a draft or publish it.
 
+While editing a Being, developers can create a Realm, Species, or Group using
+its full entry form. The new entry is linked to the Being and becomes available
+for reuse in other entries. A Being can link to only one Species.
+
 Only developers can access drafts and change entries or images.
 The app enforces these permissions on the server and in the database
-and storage policies. Visitors can read published entries and view
-their associated images.
+and storage policies. Images are stored privately; visitors can view an
+image only when its associated entry is published.
 
 ## Development setup and budget
 
@@ -96,7 +98,7 @@ the same starter app locally.
 
 ### Phase 2 — Data model and developer access
 
-Create migrations for entries, entry types, tags, and links. Set up
+Create migrations for entries, entry types, and links. Set up
 invited developer accounts and enforce draft and published visibility.
 
 **Complete when** both invited developers can sign in, and signed-out
@@ -105,7 +107,7 @@ visitors can read published entries but cannot edit or access drafts.
 ### Phase 3 — Editing, images, and publishing
 
 Build the developer forms for creating and editing entries, choosing
-related entries, applying tags, and uploading or replacing an image.
+related entries, and uploading or replacing an image.
 Add draft and publish actions.
 
 **Complete when** a developer can create a draft being, link it to a
@@ -138,8 +140,10 @@ required checks pass. This workflow ends at code review approval.
 
 ## Open design decisions
 
-- Decide whether publishing requires an image or allows a placeholder.
-- Confirm whether a being can link to multiple species. The current model
-  allows multiple realms and groups, and one species.
-- Confirm whether the first version needs file attachments beyond
-  the entry image.
+## Confirmed catalog rules
+
+- Publishing does not require an image. If an image is present, it requires
+  descriptive alt text.
+- A being can link to one species, multiple realms, and multiple groups.
+- The first version supports one entry image only; other file attachments are
+  out of scope.

@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "invite:developer": "node scripts/invite-developers.mjs",
-    "reissue:developer-invites": "node scripts/reissue-developer-invites.mjs"
+    "invite:developer": "node scripts/invite-developers.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
